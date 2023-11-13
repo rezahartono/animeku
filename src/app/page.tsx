@@ -1,31 +1,23 @@
 import TitleComponent from "@/components/molecules/title.components";
 import { ListResponse } from "@/interface/list.interface";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
 
 const Home = async () => {
-  const popularAnimes: ListResponse = await axios
-    .get(
-      process.env.ANIME_BASE_URL_API +
-        "/anime?sfw=true&order_by=popularity&limit=10"
-    )
-    .then((el) => el.data);
+  const popularAnimes: ListResponse = await fetch(
+    process.env.ANIME_BASE_URL_API +
+      "/anime?sfw=true&order_by=popularity&limit=10"
+  ).then((el) => el.json());
 
-  const upcomingAnimes: ListResponse = await axios
-    .get(
-      process.env.ANIME_BASE_URL_API +
-        "/anime?sfw=true&status=upcoming&limit=10"
-    )
-    .then((el) => el.data);
+  const upcomingAnimes: ListResponse = await fetch(
+    process.env.ANIME_BASE_URL_API + "/anime?sfw=true&status=upcoming&limit=10"
+  ).then((el) => el.json());
 
-  const recomendedAnimes: ListResponse = await axios
-    .get(
-      process.env.ANIME_BASE_URL_API +
-        "/anime?min_score=8&sfw=true&order_by=popularity&limit=10"
-    )
-    .then((el) => el.data);
+  const recomendedAnimes: ListResponse = await fetch(
+    process.env.ANIME_BASE_URL_API +
+      "/anime?min_score=8&sfw=true&order_by=popularity&limit=10"
+  ).then((el) => el.json());
 
   const listPopularAnime: ReactNode = popularAnimes.data.map((el) => {
     return (
