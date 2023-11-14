@@ -3,8 +3,17 @@
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { KeyboardEvent } from "react";
 
 const Navbar = () => {
+  const router = useRouter();
+  const handleSearch = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && event.currentTarget.value) {
+      router.push(`/search/${event.currentTarget.value}`);
+    }
+  };
+
   return (
     <nav className="py-4 z-50 px-2 md:px-40 shadow bg-main-primary text-main-light fixed top-0 left-0 w-full">
       <div className="flex flex-col md:flex-row justify-between items-center">
@@ -20,6 +29,7 @@ const Navbar = () => {
               type="text"
               className="rounded-md h-9 pe-2 ps-8 placeholder:text-[14px]"
               placeholder="Searh Anime..."
+              onKeyDown={handleSearch}
             />
             <Icon
               icon="iconamoon:search-bold"
@@ -33,10 +43,10 @@ const Navbar = () => {
               <Link href="/">Home</Link>
             </li>
             <li className="font-light hover:scale-[1.1] transition-all">
-              <Link href="/">Popular Anime</Link>
+              <Link href="/popular">Popular Anime</Link>
             </li>
             <li className="font-light hover:scale-[1.1] transition-all">
-              <Link href="/">Upcoming Anime</Link>
+              <Link href="/upcoming">Upcoming Anime</Link>
             </li>
             <li className="font-light hover:scale-[1.1] transition-all">
               <Link href="/">Recomended</Link>
